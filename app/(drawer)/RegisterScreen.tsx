@@ -51,10 +51,8 @@ export default function RegisterScreen() {
 
       // Manejo genérico de respuesta
       if (res.status === 201 || res.status === 200) {
-        Alert.alert(
-          "Registro correcto", "Usuario registrado correctamente.");
-          router.navigate("Login") 
-
+        Alert.alert("Registro correcto", "Usuario registrado correctamente.");
+        router.navigate("Login");
       } else {
         Alert.alert(
           "Registro",

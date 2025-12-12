@@ -1,47 +1,30 @@
+// src/screens/WelcomeScreen.js
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import { View, Text, Button, Alert, StyleSheet } from "react-native";
+import { serviceApi as api } from "../../service/Api";
 
-export default function Welcome() {
-  const router = useRouter();
-
-  function goToPortfolio() {
-    router.push("/(tabs)");
-  }
+export default function welcome() {
+  const getWelcomeMessage = async () => {
+    try {
+      // endpoint protegido: /welcome
+      const res = await api.get("/welcome");
+      Alert.alert("Mensaje del servidor", res.data?.message || JSON.stringify(res.data));
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Error", err.response?.data?.message || err.message || "Error al obtener mensaje");
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bienvenido a mi App</Text>
-      <Image
-        source={require("../../assets/SofyanAmrabat.jpg")}
-        style={styles.image}
-      />
-      <Text style={styles.subtitle}>
-        Explora mi portfolio con tus proyectos y hobbies.
-      </Text>
-
-      <TouchableOpacity style={styles.button} onPress={goToPortfolio}>
-        <Text style={styles.buttonText}>Ir al Portfolio</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>Bienvenido</Text>
+      <Text style={{ marginBottom: 16 }}>Has iniciado sesión correctamente.</Text>
+      <Button title="Mostrar mensaje protegido" onPress={getWelcomeMessage} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  title: { fontSize: 26, fontWeight: "700", marginBottom: 12 },
-  image: { width: 160, height: 160, marginBottom: 12 },
-  subtitle: { textAlign: "center", marginBottom: 20 },
-  button: {
-    backgroundColor: "#4caf50",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  buttonText: { color: "white", fontWeight: "700" },
+  container: { flex: 1, alignItems: "center", justifyContent: "center", padding: 16 },
+  title: { fontSize: 28, marginBottom: 8 },
 });
