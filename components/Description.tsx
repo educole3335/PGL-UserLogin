@@ -4,7 +4,10 @@ import { Image, StyleSheet, Text, View } from "react-native";
 const Description = () => {
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <Image style={styles.avatar} source={require("../assets/icon.png")} />
+      <Image
+        style={styles.avatar}
+        source={require("../assets/SofyanAmrabat.jpg")}
+      />
       <View style={styles.infoLabel}>
         <Text style={styles.textInfo}>Descripción sobre mí!</Text>
         <Text>
