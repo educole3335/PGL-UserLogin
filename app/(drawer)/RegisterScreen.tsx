@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { router } from "expo-router";
+import { serviceApi } from "../../service/Api";
 
 const validateEmail = (email: string) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,7 +47,7 @@ export default function RegisterScreen() {
 
     setLoading(true);
     try {
-      const res = await 
+      const res = await serviceApi.createToken(fullName, email, password);
 
       // Manejo genérico de respuesta
       if (res.status === 201 || res.status === 200) {
