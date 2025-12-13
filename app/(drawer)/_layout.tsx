@@ -21,6 +21,18 @@ export default function DrawerLayout() {
           title: "My List - Football",
         }}
       />
+      <Drawer.Screen
+        name="loginScreen"
+        options={{
+          title: "Login",
+        }}
+      />
+      <Drawer.Screen
+        name="registerScreen"
+        options={{
+          title: "Register",
+        }}
+      />
     </Drawer>
   );
 }
