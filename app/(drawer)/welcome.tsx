@@ -3,6 +3,7 @@ import { View, Text, Alert, StyleSheet } from "react-native";
 import { serviceApi as api } from "../../service/Api";
 import AuthService from "../../service/auth";
 
+
 export default function Welcome() {
   const [welcomeMessage, setWelcomeMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
