@@ -47,7 +47,7 @@ export default function RegisterScreen() {
 
     setLoading(true);
     try {
-      const res = await serviceApi.createToken(fullName, email, password);
+      const res = await serviceApi.register(fullName, email, password);
 
       // Manejo genérico de respuesta
       if (res.status === 201 || res.status === 200) {
