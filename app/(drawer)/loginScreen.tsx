@@ -1,4 +1,3 @@
-// src/screens/LoginScreen.js
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { serviceApi as api } from "../../service/Api";
@@ -26,12 +25,11 @@ export default function LoginScreen({ navigation }: any) {
 
     setLoading(true);
     try {
-      // endpoint: /login method: POST)
-      const res = await api.post("/login", { email, password });
+
+      const res = await api.login(email, password);
 
       if ((res.status === 200 || res.status === 201) && res.data?.token) {
         await AuthService.saveToken(res.data.token);
-        // Redirigir a pantalla de bienvenida — la navegación la controlará el navigator
         navigation.reset({
           index: 0,
           routes: [{ name: "AppDrawer" }],
@@ -41,8 +39,10 @@ export default function LoginScreen({ navigation }: any) {
       }
     } catch (err) {
       console.error(err);
-      const msg = err.response?.data?.message || err.message || "Error en login";
-      Alert.alert("Login fallido", msg);
+      Alert.alert(
+        "Error",
+        err instanceof Error ? err.message : "Error al iniciar sesión"
+      );
     } finally {
       setLoading(false);
     }
@@ -51,8 +51,21 @@ export default function LoginScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Iniciar sesión</Text>
-      <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
-       <TextInput style={styles.input} placeholder="Contraseña" value={password} onChangeText={setPassword} secureTextEntry />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Contraseña"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
       <Button title={loading ? "Entrando..." : "Entrar"} onPress={onLogin} disabled={loading} />
       <View style={{ flexDirection: "row", marginTop: 10 }}>
         <Text>¿No tienes cuenta? </Text>
